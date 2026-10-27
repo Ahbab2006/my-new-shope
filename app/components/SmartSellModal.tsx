@@ -2,6 +2,21 @@
 
 import { useState } from "react";
 
+interface CompletedSaleData {
+  productId: string;
+  customerName: string;
+  customerPhone: string;
+  imei: string;
+  paymentMethod: string;
+  salePrice: number;
+  brand: string;
+  model: string;
+  variant: string;
+  date: string;
+  invoiceNo: string;
+}
+
+
 export interface MobileProduct {
   _id: string;
   brand: string;
@@ -37,7 +52,7 @@ export default function SmartSellModal({
   const [imei, setImei] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [completedSale, setCompletedSale] = useState<any | null>(null);
+const [completedSale, setCompletedSale] = useState<CompletedSaleData | null>(null);
 
   if (!isOpen || !mobile) return null;
 
