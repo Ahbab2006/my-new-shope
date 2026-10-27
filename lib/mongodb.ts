@@ -2,10 +2,6 @@ import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI .env.local ফাইলে খুঁজে পাওয়া যায়নি!");
-}
-
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -13,13 +9,19 @@ if (!cached) {
 }
 
 export async function connectDB() {
+  if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI এনভায়রনমেন্ট ফাইলে পাওয়া যায়নি!");
+  }
+
   if (cached.conn) {
     return cached.conn;
   }
 
   if (!cached.promise) {
-    // এখানে MONGODB_URI as string দেওয়া হয়েছে, যাতে TypeScript নিশ্চিত থাকে এটি string
-    cached.promise = mongoose.connect(MONGODB_URI as string).then((mongooseInstance) => {
+    // uri ভ্যারিয়েবলটি নিশ্চিতভাবে string
+    const uri: string = MONGODB_URI;
+
+    cached.promise = mongoose.connect(uri).then((mongooseInstance) => {
       return mongooseInstance;
     });
   }

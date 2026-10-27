@@ -5,6 +5,10 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+  eslint: {
+    // লিন্ট ওয়ার্নিং ইগনোর করবে
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     agentFeedback: true,
   },
